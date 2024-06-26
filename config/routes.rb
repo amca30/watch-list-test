@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'reviews/create'
+  get 'reviews/destroy'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -6,11 +8,13 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :lists, only: [:index, :new, :show, :create] do
+  resources :lists, only: [:index, :new, :show, :create, :destroy] do
     resources :bookmarks, only: [:new, :create]
+    resources :reviews, only: :create
   end
 
   resources :bookmarks, only: :destroy
+  resources :reviews, only: :destroy
   # Defines the root path route ("/")
   root 'lists#index'
 end
